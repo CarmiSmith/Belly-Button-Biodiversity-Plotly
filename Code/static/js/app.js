@@ -26,41 +26,41 @@ function buildCharts(selection) {
     d3.json("samples.json").then((sampleData) => {
 
         // Filter the data to get the sample's OTU data
-        // Pay attention to what data is required for each chart
+
         var filtData = sampleData.samples;
         var sampleDict = filtData.filter(item => item.id == selection)[0];
         var sampleValues = sampleDict.sample_values; 
-        var barChartValues = sampleValues.slice(0, 10).reverse();
+        var barValues = sampleValues.slice(0, 10).reverse();
         var idValues = sampleDict.otu_ids;
-        var barChartLabels = idValues.slice(0, 10).reverse();
+        var barLabels = idValues.slice(0, 10).reverse();
         var reformattedLabels = [];
-        barChartLabels.forEach((label) => {
+        barLabels.forEach((label) => {
             reformattedLabels.push("OTU " + label);
         });
-
-        var hovertext = sampleDict.otu_labels;
-        var barhovertext = hovertext.slice(0, 10).reverse();
+        var hoverText = sampleDict.otu_labels;
+        var barHoverText = hoverText.slice(0, 10).reverse();
+        
 
         // Create bar chart in correct location
 
-        var barChartTrace = {
+        var barTrace = {
             type: "bar",
             y: reformattedLabels,
-            x: barChartValues,
-            text: barhovertext,
+            x: barValues,
+            text: barHoverText,
             orientation: 'h'
         };
 
-        var barChartData = [barChartTrace];
+        var barData = [barTrace];
 
-        Plotly.newPlot("bar", barChartData);
+        Plotly.newPlot("bar", barData);
 
         // Create bubble chart in correct location
 
-        var bubbleChartTrace = {
+        var bubbleTrace = {
             x: idValues,
             y: sampleValues,
-            text: hovertext,
+            text: hoverText,
             mode: "markers",
             marker: {
                 color: idValues,
@@ -68,7 +68,7 @@ function buildCharts(selection) {
             }
         };
 
-        var bubbleChartData = [bubbleChartTrace];
+        var bubbleData = [bubbleTrace];
 
         var layout = {
             showlegend: false,
@@ -79,7 +79,7 @@ function buildCharts(selection) {
             }
         };
 
-        Plotly.newPlot("bubble", bubbleChartData, layout);
+        Plotly.newPlot("bubble", bubbleData, layout);
     });
 }
 
