@@ -1,3 +1,4 @@
+
 // Define a function that will create metadata for given sample
 function buildMetadata(selection) {
 
@@ -10,8 +11,8 @@ function buildMetadata(selection) {
         var sample = filtData.filter(item => item.id == selection);
 
         // Specify the location of the metadata and update it
-        var metadata = d3.select("#sample-metadata");
-        metadata.html("");
+        var metadata = d3.select("#sample-metadata").html("");
+        //metadata.html("");
 
         Object.entries(sample).forEach(([key, value]) => {
             metadata.append("h5").text(`${key}: ${value}`);
@@ -28,26 +29,21 @@ function buildCharts(selection) {
         // Filter the data to get the sample's OTU data
 
         var filtData = sampleData.samples;
-        var sampleDict = filtData.filter(item => item.id == selection)[0];
-        var sampleValues = sampleDict.sample_values; 
-        var barValues = sampleValues.slice(0, 10).reverse();
-        var idValues = sampleDict.otu_ids;
-        var barLabels = idValues.slice(0, 10).reverse();
-        var reformattedLabels = [];
-        barLabels.forEach((label) => {
-            reformattedLabels.push("OTU " + label);
-        });
-        var hoverText = sampleDict.otu_labels;
-        var barHoverText = hoverText.slice(0, 10).reverse();
+        var sampleDict = filtData.filter(item => item.id == selection);
+        var sampleDict = sampleDict[0]; 
+        var idValues = sampleDict[0].sample_values;
+        var barLabels = sampleDict[0].otu_ids;
+        var hoverText = sampleDict[0].otu_labels;
+        var y_axis = barLabels.slice(0, 10).map(labels => 'OTU ${labels}').reverse()
         
 
         // Create bar chart in correct location
 
         var barTrace = {
             type: "bar",
-            y: reformattedLabels,
-            x: barValues,
-            text: barHoverText,
+            y: y_axis,
+            x: sampleValues.slice(0, 10).reverse(),
+            text: hoverText.slice(0, 10).reverse(),
             orientation: 'h'
         };
 
@@ -58,13 +54,14 @@ function buildCharts(selection) {
         // Create bubble chart in correct location
 
         var bubbleTrace = {
-            x: idValues,
-            y: sampleValues,
+            x: barLabels,
+            y: idValues,
             text: hoverText,
             mode: "markers",
             marker: {
-                color: idValues,
-                size: sampleValues
+                color: barLabels,
+                size: idValues,
+                colorscale: "Earth"
             }
         };
 
