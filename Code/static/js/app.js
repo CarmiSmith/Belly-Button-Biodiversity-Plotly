@@ -1,6 +1,6 @@
 var dropdownMenu = d3.select('#selDataset');
 
-d3.json("data/samples.json").then((sampleData) => {
+d3.json("samples.json").then((sampleData) => {
     var filtData = sampleData.names;
 
     filtData.forEach((id) => {
@@ -10,10 +10,10 @@ d3.json("data/samples.json").then((sampleData) => {
     });
 
     // Use first sample to build metadata and initial plots
-    builddData(filtData[0]);
-
-    buildCharts(filtData[0]);
     
+
+    //buildCharts(filtData[0]);
+    builddData(filtData[0]);
 });
 
 // Define a function that will create metadata for given sample
