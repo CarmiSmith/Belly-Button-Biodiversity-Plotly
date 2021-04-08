@@ -87,7 +87,7 @@ function buildCharts(selection) {
 
     // Build the gauge indicator
 
-      //var IDs = sampleData.names;
+      // Var IDs = sampleData.names;
       var wash_freq = sampleDict.wfreq;
 
       var data = [
