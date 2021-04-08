@@ -12,7 +12,8 @@ function buildMetadata(selection) {
       // Specify the location of the metadata and update it
       var metadata = d3.select('#sample-metadata');
       metadata.html('');
-
+      
+      // Add to html
       Object.entries(sample).forEach((key) => {
           metadata.append('h5').text(key[0].toUpperCase() + ": " +key[1]+ "\n");
       });
@@ -26,7 +27,6 @@ function buildCharts(selection) {
   d3.json("samples.json").then((sampleData) => {
 
       // Filter the data to get the sample's OTU data
-     
       var filtData = sampleData.samples;
       var sampleDict = filtData.filter(item => item.id == selection)[0];
       var sampleValues = sampleDict.sample_values; 
@@ -36,12 +36,10 @@ function buildCharts(selection) {
       barLabels.forEach((label) => {
           newLabels.push("OTU " + label);
       });
-
       var hovertext = sampleDict.otu_labels;
       
 
       // Create bar chart in correct location
-
       var barTrace = {
           type: "bar",
           y: newLabels,
@@ -52,7 +50,7 @@ function buildCharts(selection) {
 
       var barData = [barTrace];
 
-        // create the layout variable
+  // Create the layout variable
   var barLayout = {
     title: "Top 10 OTUs",
     yaxis: {
@@ -63,7 +61,6 @@ function buildCharts(selection) {
       Plotly.newPlot("bar", barData, barLayout);
 
       // Create bubble chart in correct location
-
       var bubbleTrace = {
           x: idValues,
           y: sampleValues,
@@ -88,10 +85,7 @@ function buildCharts(selection) {
 
       Plotly.newPlot("bubble", bubbleData, layout);
 
-      // Build the gauge indicator
-
-      //var guageChart = d3.select("gauge");
-      //guageChart.html(" ");
+    // Build the gauge indicator
 
       //var IDs = sampleData.names;
       var wash_freq = sampleDict.wfreq;
@@ -143,6 +137,7 @@ function init() {
       // Add dropdown option for each sample
       var dropdownMenu = d3.select("#selDataset");
 
+      // Add names to the drop down
       filtData.forEach((id) => {
           dropdownMenu.append("option").property("value", id).text(id);
       })

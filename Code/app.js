@@ -49,7 +49,7 @@ function buildMetadata(selection) {
   
         var barData = [barTrace];
   
-    // create the layout variable
+    // Create the layout variable
     var barLayout = {
       title: "Top 10 OTUs",
       yaxis: {
@@ -60,7 +60,6 @@ function buildMetadata(selection) {
         Plotly.newPlot("bar", barData, barLayout);
   
         // Create bubble chart in correct location
-  
         var bubbleTrace = {
             x: idValues,
             y: sampleValues,
@@ -99,7 +98,8 @@ function buildMetadata(selection) {
   
         // Add dropdown option for each sample
         var dropdownMenu = d3.select("#selDataset");
-  
+        
+        // Add names to the drop down
         filtData.forEach((id) => {
             dropdownMenu.append("option").property("value", id).text(id);
         })
