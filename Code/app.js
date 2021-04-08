@@ -12,7 +12,8 @@ function buildMetadata(selection) {
         // Specify the location of the metadata and update it
         var metadata = d3.select('#sample-metadata');
         metadata.html('');
-  
+        
+        // Add to html
         Object.entries(sample).forEach((key) => {
             metadata.append('h5').text(key[0].toUpperCase() + ": " +key[1]+ "\n");
         });
@@ -26,7 +27,6 @@ function buildMetadata(selection) {
     d3.json("samples.json").then((sampleData) => {
   
         // Filter the data to get the sample's OTU data
-       
         var filtData = sampleData.samples;
         var sampleDict = filtData.filter(item => item.id == selection)[0];
         var sampleValues = sampleDict.sample_values; 
@@ -36,12 +36,9 @@ function buildMetadata(selection) {
         barLabels.forEach((label) => {
             newLabels.push("OTU " + label);
         });
-  
         var hovertext = sampleDict.otu_labels;
         
-  
         // Create bar chart in correct location
-  
         var barTrace = {
             type: "bar",
             y: newLabels,
@@ -52,7 +49,7 @@ function buildMetadata(selection) {
   
         var barData = [barTrace];
   
-          // create the layout variable
+    // create the layout variable
     var barLayout = {
       title: "Top 10 OTUs",
       yaxis: {
